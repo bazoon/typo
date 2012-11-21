@@ -149,14 +149,14 @@
   </div> 
 
   <%- if current_user.admin? %>
-   <h4><%= _("Merge articles") %></h4>
+   <h4> "Merge articles" </h4>
     <div class='class'>
       <%= text_field_tag 'merge_with' %>
     </div>
   </div>
 
    <div class='actions'>
-      <input id='Merge' type="submit" value="<%= _('Merge') %>" name="merge" class='btn info' />
+      <input id='Merge' type="submit" value="Merge" name="merge" class='btn info' />
     </div>
 
    <%- end %> 
