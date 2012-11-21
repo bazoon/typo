@@ -142,6 +142,9 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
+
+# render :text => params
+
     @article = Article.get_or_build_article(id)
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
 
@@ -163,6 +166,18 @@ class Admin::ContentController < Admin::BaseController
     @article.published_at = DateTime.strptime(params[:article][:published_at], "%B %e, %Y %I:%M %p GMT%z").utc rescue Time.parse(params[:article][:published_at]).utc rescue nil
 
     if request.post?
+
+    # HERE
+      if current_user.admin?  
+        unless params['merge_with'].empty?
+          other_article = Article.find(params['merge_with'])
+          @new_article = @article.merge_with(params['merge_with'])
+          params['action'] = @new_article.nil? ? "merge_fail" : "merge"
+          @article = @new_article unless @new_article.nil? 
+        end
+      end  
+
+
       set_article_author
       save_attachments
       
@@ -175,7 +190,11 @@ class Admin::ContentController < Admin::BaseController
         redirect_to :action => 'index'
         return
       end
+
+
+
     end
+
 
     @images = Resource.images_by_created_at.page(params[:page]).per(10)
     @resources = Resource.without_images_by_filename
@@ -189,7 +208,11 @@ class Admin::ContentController < Admin::BaseController
       flash[:notice] = _('Article was successfully created')
     when 'edit'
       flash[:notice] = _('Article was successfully updated.')
-    else
+    when 'merge'
+      flash[:notice] = _('Article was successfully merged')
+    when 'merge_fail'
+      flash[:error] = _('Article was not merged')
+ else
       raise "I don't know how to tidy up action: #{params[:action]}"
     end
   end

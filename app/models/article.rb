@@ -416,6 +416,71 @@ class Article < Content
     user.admin? || user_id == user.id
   end
 
+
+
+
+   def same_article?(a1,a2)
+     a1.id == a2.id
+   end  
+
+   def copy_comments(from_article,to_article)
+      from_article.comments.each do |comment|
+         comment_clone = comment.clone
+         comment_clone.article_id = to_article.id
+         comment_clone.save
+      end   
+   end  
+
+
+
+  def cop_article(article_1,article_2)
+
+    new_article = article_1.clone
+    
+    title = article_1.title or article_2.title
+    new_article.title = title unless title.nil?
+    
+    new_article.guid = nil
+    new_article.create_guid
+
+    new_article.body = ""      
+    new_article.body = article_1.body unless article_1.body.nil?
+    new_article.body += article_2.body unless article_2.body.nil?
+    
+
+    new_article.save    
+    new_article
+  end
+
+  
+
+  def merge_with(other_article_id)
+
+    other_article = Article.find(other_article_id)
+ 
+
+    unless same_article?(self,other_article)
+
+      new_article = cop_article(self,other_article)
+      copy_comments(self,new_article)
+      copy_comments(other_article,new_article)   
+
+      self.destroy
+      other_article.destroy
+
+      new_article
+    else
+      nil
+    end  
+
+  end   
+
+
+
+
+
+
+
   protected
 
   def set_published_at

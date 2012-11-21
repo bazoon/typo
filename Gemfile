@@ -19,9 +19,14 @@ dbfile = File.expand_path("../config/database.yml", __FILE__)
 #  end
 #end
 
+# gem 'pry'
+# gem 'pry-nav'
+
 group :production do
   gem 'pg'
 end
+
+gem "railroady"
 
 source :rubygems
 
@@ -31,7 +36,7 @@ gem 'require_relative'
 gem 'htmlentities'
 gem 'json'
 gem 'bluecloth', '~> 2.1'
-gem 'coderay', '~> 0.9'
+# gem 'coderay', '~> 0.9'
 gem 'kaminari'
 gem 'RedCloth', '~> 4.2.8'
 gem 'addressable', '~> 2.1', :require => 'addressable/uri'

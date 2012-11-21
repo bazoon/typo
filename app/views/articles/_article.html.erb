@@ -1,3 +1,4 @@
+<h1>TESTING</h1>
 <div id="article-<%= article.id %>">
   <h2 class='page-header'><%= (controller.controller_name == 'redirect') ? article.title : link_to_permalink(article,article.title) %></h2>
   <%= render 'articles/protected_article_content', { :article => article } %>

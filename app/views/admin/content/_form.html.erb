@@ -146,7 +146,22 @@
     <ul id='attachments' class='inputs-list'>
       <%= render 'admin/content/attachment', { :attachment_num => 1, :hidden => false } -%>
     </ul>
-  </div>    
+  </div> 
+
+  <%- if current_user.admin? %>
+   <h4><%= _("Merge") %></h4>
+    <div class='class'>
+      <%= text_field_tag 'merge_with' %>
+    </div>
+  </div>
+
+   <div class='actions'>
+      <input id='Merge' type="submit" value="<%= _('Merge') %>" name="merge" class='btn info' />
+    </div>
+
+   <%- end %> 
+
+
   </div>
 
 </div>
