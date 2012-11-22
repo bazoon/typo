@@ -169,7 +169,7 @@ class Admin::ContentController < Admin::BaseController
 
     # HERE
       if current_user.admin?  
-        unless params['merge_with'].empty?
+        unless params['merge_with'].nil?
           other_article = Article.find(params['merge_with'])
           @new_article = @article.merge_with(params['merge_with'])
           params['action'] = @new_article.nil? ? "merge_fail" : "merge"
