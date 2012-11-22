@@ -151,16 +151,15 @@
 
   <%- if current_user.admin?  and @article.valid? %>
    <h4>Merge articles</h4>
-    <div class='class'>
+     <div class=''> 
+      <label>Article ID</label>
       <%= text_field_tag 'merge_with' %>
-    </div>
-  </div>
+     </div>
+      <input id='Merge' type="submit" value="Merge" name="merge"/>
+   </div>
 
-   <div class='actions'>
-      <input id='Merge' type="submit" value="Merge" name="merge" class='btn info' />
-    </div>
-
-   <%- end %> 
+   
+     <%- end %> 
 
 
   </div>
