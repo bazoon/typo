@@ -150,7 +150,7 @@
 
 Merge articles
 
-  <%- if current_user.admin? %>
+  <%- if(current_user.admin? and @article.valid?) %>
    <h4> Merge articles </h4>
     <div class='class'>
       <%= text_field_tag 'merge_with' %>
